@@ -1,0 +1,13 @@
+# Temporary editor files
+*.sw?
+*~
+
+# Temporary files created by operating systems
+.DS_Store
+
+# Compiler outputs
+*.o
+render
+
+# Rendering outputs
+*.ppm
