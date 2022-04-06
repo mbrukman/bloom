@@ -18,8 +18,14 @@ ifeq ($(VERBOSE),1)
   VERB =
 endif
 
+CXX = clang++
+CXXFLAGS = -pedantic -Wall -Wextra
+
 SRCS_CC := $(wildcard *.cc)
 SRCS_H := $(wildcard *.h)
 
 render: $(SRCS_CC) $(SRCS_H) Makefile
-	$(VERB) clang++ $(SRCS_CC) -o $@
+	$(VERB) $(CXX) $(CXXFLAGS) $(SRCS_CC) -o $@
+
+clean:
+	$(VERB) rm -f render
