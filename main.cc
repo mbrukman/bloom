@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+int main() {
   Image img(256, 256);
   img.OutputAsPpm(std::cout);
 }
