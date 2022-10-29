@@ -12,20 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERBOSE =
 VERB = @
 ifeq ($(VERBOSE),1)
   VERB =
 endif
 
+# Per the documentation [1], the sanitizer flags need to be present during both
+# compilation and linking, and we need to use `clang++` rather than `ld`, for
+# the link step.
+#
+# [1]: https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
+SANITIZERS = -fsanitize=alignment,bool,builtin,bounds,float-cast-overflow,float-divide-by-zero,null,undefined
+
 CXX = clang++
-CXXFLAGS = -pedantic -Wall -Wextra
+CXXFLAGS = -pedantic -Wall -Wextra $(SANITIZERS)
+LDFLAGS = $(SANITIZERS)
 
 SRCS_CC := $(wildcard *.cc)
 SRCS_H := $(wildcard *.h)
+OBJS := $(patsubst %.cc, %.o, $(SRCS_CC))
 
-render: $(SRCS_CC) $(SRCS_H) Makefile
-	$(VERB) $(CXX) $(CXXFLAGS) $(SRCS_CC) -o $@
+%.o: %.cc $(SRCS_H) Makefile
+	$(VERB) $(CXX) $(CXXFLAGS) -c $< -o $@
+
+render: $(OBJS) Makefile
+	$(VERB) $(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 clean:
-	$(VERB) rm -f render
+	$(VERB) rm -f render *.o
