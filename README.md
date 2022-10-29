@@ -1,5 +1,10 @@
 # Bloom
 
+[![Build Status][github-ci-badge]][github-ci-url]
+
+[github-ci-badge]: https://github.com/mbrukman/bloom/actions/workflows/cpp.yml/badge.svg?branch=main
+[github-ci-url]: https://github.com/mbrukman/bloom/actions/workflows/cpp.yml?query=branch%3Amain
+
 **Bloom** is an exploration of raytracing, path tracing, physically-based
 rendering, and more.
 
